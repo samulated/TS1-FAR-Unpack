@@ -15,4 +15,4 @@ e.g. 'FileName.far' becomes a directory named 'FileName_Export\'
 - [ ] Something to open up the extracted IFF files and view/edit data inside?
 
 ## References
-FAR file format information was compiled by Greg Noel and Peter Gould over here: http://simtech.sourceforge.net/tech/far.html
+FAR file format information was compiled by David Baum and Greg Noel over here: http://simtech.sourceforge.net/tech/far.html

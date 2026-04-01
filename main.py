@@ -4,11 +4,40 @@ import sys
 # FAR File Format info from: http://simtech.sourceforge.net/tech/far.html
 
 # Update the below variables to match your own project area & filename
-projLoc = os.path.join('D:', 'Projects', 'Modding', 'Sims 1', 'Dissect')
-filename = "ExpansionPack7.far"
+#projLoc = os.path.join('D:', 'Projects', 'Modding', 'Sims 1', 'Dissect')
+#filename = "ExpansionPack7.far"
+
+def parse_args(args):
+    if args.__len__ <= 2:
+        return None
+    
+    out = None
+
+    if os.path.exists(args[1]):
+        out[0] = args[1]
+    
+    if os.path.exists(args[2]):
+        out[1] = args[1]
+        return out
+    elif args[2] == "--here":
+        out[1] = os.getcwd()
+
+    return None
 
 if __name__ == '__main__':
-    file = open(os.path.join(projLoc, filename), "rb")
+    
+    parsed = parse_args(sys.argv)
+    
+    if parsed is None:
+        print("Unable to run, please ensure you run this script with an input path and either an output path or --here flag for in-place unpacking.")
+
+    input_path = parsed[0]
+    output_path = parsed[1]
+
+    filename = input_path.split("\\")
+    filename = filename[:len(filename) - 1]
+
+    file = open(input_path, "rb")
 
     # header
     h_raw = file.read(16)
@@ -38,7 +67,7 @@ if __name__ == '__main__':
 
     print("Manifest loaded, FAR archive contains " + str(m_h_fileNum) + " files.")
 
-    exportLoc = os.path.join(projLoc, filename.split(".")[0] + "_Export")
+    exportLoc = os.path.join(output_path, filename.split(".")[0])
     print("Default export path: " + str(exportLoc))
 
     # create export folder if doesnt exist

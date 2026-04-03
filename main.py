@@ -8,20 +8,27 @@ import sys
 #filename = "ExpansionPack7.far"
 
 def parse_args(args):
-    if args.__len__ <= 2:
+    print("DEBUG: Parsing args...")
+    if len(args) <= 2:
+        print("DEBUG: Not enough arguments to proceed")
         return None
     
-    out = None
+    out = [None, None]
 
     if os.path.exists(args[1]):
+        print("DEBUG: In path set")
         out[0] = args[1]
     
-    if os.path.exists(args[2]):
-        out[1] = args[1]
-        return out
-    elif args[2] == "--here":
+    if args[2] == "--here":
         out[1] = os.getcwd()
+        print("DEBUG: --here argument detected. Setting Out path to current directory")
+        return out
+    else:
+        out[1] = args[2]
+        print("DEBUG: Out path set")
+        return out
 
+    print("DEBUG: Args not set!")
     return None
 
 if __name__ == '__main__':
@@ -30,12 +37,15 @@ if __name__ == '__main__':
     
     if parsed is None:
         print("Unable to run, please ensure you run this script with an input path and either an output path or --here flag for in-place unpacking.")
+        sys.exit(0)
 
     input_path = parsed[0]
     output_path = parsed[1]
 
     filename = input_path.split("\\")
-    filename = filename[:len(filename) - 1]
+    filename = filename[-1]
+
+    print(f"DEBUG: Filename set: {filename}")
 
     file = open(input_path, "rb")
 
@@ -72,7 +82,24 @@ if __name__ == '__main__':
 
     # create export folder if doesnt exist
     if not os.path.exists(exportLoc):
-        os.mkdir(exportLoc)
+        print(f"DEBUG: Export folder does not exists.")
+        m_exportLoc = exportLoc.split("\\")
+        print(f"{m_exportLoc}")
+        exportLocLong = ""
+        i = 0
+        while i < len(m_exportLoc):
+            exportLocLong = exportLocLong + m_exportLoc[i] + "\\"
+            print(f"DEBUG: Checking {exportLocLong}")
+            if not os.path.exists(exportLocLong):
+                if i is 0:
+                    print(f"Invalid drive specified: {exportLocLong}")
+                    sys.exit(0)
+                else:
+                    os.mkdir(exportLocLong)
+                    print(f"DEBUG: Created directory: {exportLocLong}")
+            i += 1
+    else:
+        print(f"DEBUG: Export folder is valid.")
 
     i = 0
     while i < m_h_fileNum:

@@ -3,28 +3,34 @@ import sys
 
 # FAR File Format info from: http://simtech.sourceforge.net/tech/far.html
 
+DEBUGGING = False
+
+def debug_log(message):
+    if DEBUGGING:
+        print(f"DEBUG: {message}")
+
 def parse_args(args):
-    print("DEBUG: Parsing args...")
+    debug_log("Parsing args...")
     if len(args) <= 2:
-        print("DEBUG: Not enough arguments to proceed")
+        debug_log("Not enough arguments to proceed")
         return None
     
     output = [None, None]
 
     if os.path.exists(args[1]):
-        print("DEBUG: In path set")
+        debug_log("In path set")
         output[0] = args[1]
     
     if args[2] == "--here":
         output[1] = os.getcwd()
-        print("DEBUG: --here argument detected. Setting Out path to current directory")
+        debug_log("--here argument detected. Setting Out path to current directory")
         return output
     else:
         output[1] = args[2]
-        print("DEBUG: Out path set")
+        debug_log("Out path set")
         return output
 
-    print("DEBUG: Args not set!")
+    debug_log("Args not set!")
     return None
 
 if __name__ == '__main__':
@@ -41,7 +47,7 @@ if __name__ == '__main__':
     filename = input_path.split("\\")
     filename = filename[-1]
 
-    print(f"DEBUG: Filename set: {filename}")
+    debug_log(f"Filename set: {filename}")
 
     file = open(input_path, "rb")
 
@@ -78,24 +84,24 @@ if __name__ == '__main__':
 
     # create export folder if doesnt exist
     if not os.path.exists(export_location):
-        print(f"DEBUG: Export folder does not exists.")
+        debug_log(f"Export folder does not exists.")
         stepped_export_location = export_location.split("\\")
         print(f"{stepped_export_location}")
         working_export_location = ""
         i = 0
         while i < len(stepped_export_location):
             working_export_location = f"{working_export_location}{stepped_export_location[i]}\\"
-            print(f"DEBUG: Checking {working_export_location}")
+            debug_log(f"Checking {working_export_location}")
             if not os.path.exists(working_export_location):
                 if i is 0:
                     print(f"Invalid drive specified: {working_export_location}")
                     sys.exit(0)
                 else:
                     os.mkdir(working_export_location)
-                    print(f"DEBUG: Created directory: {working_export_location}")
+                    debug_log(f"Created directory: {working_export_location}")
             i += 1
     else:
-        print(f"DEBUG: Export folder is valid.")
+        debug_log(f"Export folder is valid.")
 
     i = 0
     while i < manifest_header_file_number:

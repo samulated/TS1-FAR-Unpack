@@ -11,7 +11,7 @@ e.g. 'FileName.far' becomes a directory named 'FileName_Export\'
 
 ## Potential To-Dos
 - [ ] FAR Repack (useful for large amounts of custom content & global/replacement mods)
-- [ ] CLI mode for FAR Unpack
+- [x] CLI mode for FAR Unpack
 - [ ] Something to open up the extracted IFF files and view/edit data inside?
 
 ## References

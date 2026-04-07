@@ -4,10 +4,11 @@ Python-based archive unpacker for The Sims 1 FAR files
 ## How to use
 This is essentially just a python script that reads the FAR file and extracts the contained files within.
 
-There is a projLoc variable at the top that points towards the containing folder, and a filename variable for the file you want to open.
+Use it like this:
+`python main.py "C:\Some\Known\Filepath.far" "C:\An\Output\Location"`
+`python main.py "C:\Some\Known\Filepath.far" --here` (for exporting to the same location that you're running the script from)
 
-By default the script will just create a sub-folder using the filename, and then dump the exported files in there.
-e.g. 'FileName.far' becomes a directory named 'FileName_Export\'
+Further clean-up may be on the way in future version.
 
 ## Potential To-Dos
 - [ ] FAR Repack (useful for large amounts of custom content & global/replacement mods)
